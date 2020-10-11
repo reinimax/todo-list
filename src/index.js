@@ -5,45 +5,55 @@ import ToDo from "./todo.js";
 import Project from "./project.js";
 import displayController from "./displaycontroller.js"
 
-let board = [];
+const boardController = (() => {
+    let board = [];
 
-function createProject(name) {
-    board.push(new Project(name));
-}
+    function getBoard() {
+        return board;
+    }
 
-function createToDo(name, description, dueDate, priority, project) {
-    findProject(project).addToDo(new ToDo(name, description, dueDate, priority));
-}
+    function createProject(name) {
+        board.push(new Project(name));
+    }
+    
+    function createToDo(name, description, dueDate, priority, project) {
+        findProject(project).addToDo(new ToDo(name, description, dueDate, priority));
+    }
+    
+    function findProject(project) {
+        return board.find( (obj) => obj.name === project);
+    }
+    
+    function deleteProject(project) {
+        const indexToDelete = board.indexOf(findProject(project));
+        board.splice(indexToDelete, 1);
+    }
 
-function findProject(project) {
-    return board.find( (obj) => obj.name === project);
-}
+    return {getBoard, createProject, createToDo, findProject, deleteProject};
+})();
 
-function deleteProject(project) {
-    const indexToDelete = board.indexOf(findProject(project));
-    board.splice(indexToDelete, 1);
-}
+
 
 //for testing
-createProject("default");
-createToDo("Test", "This is a test", "anymtime", "no priority", "default");
+boardController.createProject("default");
+boardController.createToDo("Test", "This is a test", "anymtime", "no priority", "default");
 
-console.table(findProject("default").toDoList);
+console.table(boardController.findProject("default").toDoList);
 
-createToDo("Test2", "This is a test", "anymtime", "no priority", "default");
+boardController.createToDo("Test2", "This is a test", "anymtime", "no priority", "default");
 
-console.table(findProject("default").toDoList);
+console.table(boardController.findProject("default").toDoList);
 
-findProject("default").deleteToDo("Test2");
+boardController.findProject("default").deleteToDo("Test2");
 
-console.table(findProject("default").toDoList);
+console.table(boardController.findProject("default").toDoList);
 
-createProject("default2");
+boardController.createProject("default2");
 
-console.table(board);
+console.table(boardController.getBoard());
 
-deleteProject("default2");
+boardController.deleteProject("default2");
 
-console.table(board);
+console.table(boardController.getBoard());
 
-displayController.renderNavBar(board);
+displayController.renderNavBar(boardController.getBoard());
