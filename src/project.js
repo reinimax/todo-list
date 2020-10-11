@@ -4,8 +4,12 @@ export default class Project {
         this.toDoList = [];
     }
 
+    get name() {
+        return this._name;
+    }
+    
     set name(newName) {
-        this.name = newName;
+        this._name = newName;
     }
 
     addToDo(item) {
