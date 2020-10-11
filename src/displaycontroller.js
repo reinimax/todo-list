@@ -33,8 +33,8 @@ const displayController = (() => {
     }
 
     function clearDisplayElement(displayElement) {
-        for (let i = 0; i < displayElement.childNodes.length; i++) {
-            displayElement.childNodes[i].remove();
+        while (displayElement.childNodes.length > 0) {
+            displayElement.lastChild.remove();
         }
     }
     
