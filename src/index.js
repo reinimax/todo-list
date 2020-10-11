@@ -1,12 +1,22 @@
 import ToDo from "./todo.js";
 import Project from "./project.js";
 
-let defaultProject = new Project("default");
+let board = [];
 
-function createToDo(name, description, dueDate, priority, project) {
-    project.addToDo(new ToDo(name, description, dueDate, priority));
+function createProject(name) {
+    board.push(new Project(name));
 }
 
-createToDo("Test", "This is a test", "anymtime", "no priority", defaultProject);
+function createToDo(name, description, dueDate, priority, project) {
+    findProject(project).addToDo(new ToDo(name, description, dueDate, priority));
+}
 
-console.table(defaultProject.toDoList);
+function findProject(project) {
+    return board.find( (obj) => obj.name === project);
+}
+
+//for testing
+createProject("default");
+createToDo("Test", "This is a test", "anymtime", "no priority", "default");
+
+console.table(findProject("default").toDoList);
