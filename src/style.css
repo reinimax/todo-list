@@ -1,7 +1,7 @@
-#new-project-form {
+.popup-box {
     display: none;
 }
 
-#new-todo-form {
-    display: none;
+.visible {
+    display: block;
 }
