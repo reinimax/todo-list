@@ -1,3 +1,6 @@
+import "./reset.css";
+import "./style.css";
+
 import ToDo from "./todo.js";
 import Project from "./project.js";
 import displayController from "./displaycontroller.js"
