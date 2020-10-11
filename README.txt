@@ -5,6 +5,19 @@ Work in progress.
 So far, the logic for creating projects and to-do items is implemented. Projects and to-do's can also be deleted.
 Added also a display-controller that renders the navbar (which lists all the projects of the user).
 
-Next up functionality will be added to open/close the forms for making new projects/to-do's in the UI.
-("display: none" should be added to a class called "popup-box" or so. Then add a class "visible" and implement
-listeners to toggle it when the user clicks a button)
+New projects can be created via the button in the new project form. They are also displayed in the UI.
+The current plan is to have a module displaycontroller, a module boardcontroller (which controls the logic/the array 
+that saves the projects) and a module "coordinator" that calls on the two to create objects and modify the DOM.
+If this works, this pattern should ensure that boardcontroller and displaycontroller are loosely coupled.
+
+Probably I will move boardcontroller to it's own file, so that it is a proper module. 
+boardcontroller should not access any DOM-elements. It needs only access to the classes To-Do and Project to create
+objects. So the boardcontroller-file will import these. I shouldn't need them in any other file.
+
+index.js should them import only displaycontroller and boardcontroller modules (and the css obviously).
+
+displaycontroller should obviously only manipulate the DOM. Maybe the renderNavBar function is still too closely
+coupled with boardcontroller (it expects an array that contains objects that have a property "name").
+
+I'm also still not sure about the multiple eventlisteners on some buttons, but at this point it seems better to me
+because it keeps things more separated though it creates some redundancy probably.
