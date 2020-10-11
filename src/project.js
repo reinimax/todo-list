@@ -16,7 +16,12 @@ export default class Project {
         this.toDoList.push(item);
     }
 
+    findToDo(item) {
+        return this.toDoList.find( (obj) => obj.name === item);
+    }
+
     deleteToDo(item) {
-        //delete an item
+        const indexToDelete = this.toDoList.indexOf(this.findToDo(item));
+        this.toDoList.splice(indexToDelete, 1);
     }
 }
