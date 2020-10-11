@@ -1,5 +1,6 @@
 import ToDo from "./todo.js";
 import Project from "./project.js";
+import displayController from "./displaycontroller.js"
 
 let board = [];
 
@@ -41,3 +42,5 @@ console.table(board);
 deleteProject("default2");
 
 console.table(board);
+
+displayController.renderNavBar(board);

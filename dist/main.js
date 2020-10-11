@@ -10,6 +10,20 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/displaycontroller.js":
+/*!**********************************!*\
+  !*** ./src/displaycontroller.js ***!
+  \**********************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => __WEBPACK_DEFAULT_EXPORT__\n/* harmony export */ });\nconst displayController = (() => {\n    //cacheDOM\n    const newProjectBtn = document.querySelector(\"#new-project\");\n    const newToDoBtn = document.querySelector(\"#new-todo\");\n    const navBarLinks = document.querySelector(\"#navbar-links\");\n    \n    function renderNavBar(arrayToRender) {\n        clearDisplayElement(navBarLinks);\n        for (let i = 0; i < arrayToRender.length; i++) {\n            let btn = document.createElement(\"button\");\n            btn.textContent = arrayToRender[i].name;\n            //add a listener\n            navBarLinks.appendChild(btn);\n        }\n    }\n\n    function clearDisplayElement(displayElement) {\n        for (let i = 0; i < displayElement.childNodes.length; i++) {\n            displayElement.childNodes[i].remove();\n        }\n    }\n    \n\n    return {renderNavBar};\n})();\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (displayController);\n\n//# sourceURL=webpack://todo-list/./src/displaycontroller.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -19,7 +33,7 @@
 /*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _todo_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./todo.js */ \"./src/todo.js\");\n/* harmony import */ var _project_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project.js */ \"./src/project.js\");\n\n\n\nlet board = [];\n\nfunction createProject(name) {\n    board.push(new _project_js__WEBPACK_IMPORTED_MODULE_0__.default(name));\n}\n\nfunction createToDo(name, description, dueDate, priority, project) {\n    findProject(project).addToDo(new _todo_js__WEBPACK_IMPORTED_MODULE_1__.default(name, description, dueDate, priority));\n}\n\nfunction findProject(project) {\n    return board.find( (obj) => obj.name === project);\n}\n\nfunction deleteProject(project) {\n    const indexToDelete = board.indexOf(findProject(project));\n    board.splice(indexToDelete, 1);\n}\n\n//for testing\ncreateProject(\"default\");\ncreateToDo(\"Test\", \"This is a test\", \"anymtime\", \"no priority\", \"default\");\n\nconsole.table(findProject(\"default\").toDoList);\n\ncreateToDo(\"Test2\", \"This is a test\", \"anymtime\", \"no priority\", \"default\");\n\nconsole.table(findProject(\"default\").toDoList);\n\nfindProject(\"default\").deleteToDo(\"Test2\");\n\nconsole.table(findProject(\"default\").toDoList);\n\ncreateProject(\"default2\");\n\nconsole.table(board);\n\ndeleteProject(\"default2\");\n\nconsole.table(board);\n\n//# sourceURL=webpack://todo-list/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _todo_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./todo.js */ \"./src/todo.js\");\n/* harmony import */ var _project_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project.js */ \"./src/project.js\");\n/* harmony import */ var _displaycontroller_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./displaycontroller.js */ \"./src/displaycontroller.js\");\n\n\n\n\nlet board = [];\n\nfunction createProject(name) {\n    board.push(new _project_js__WEBPACK_IMPORTED_MODULE_1__.default(name));\n}\n\nfunction createToDo(name, description, dueDate, priority, project) {\n    findProject(project).addToDo(new _todo_js__WEBPACK_IMPORTED_MODULE_2__.default(name, description, dueDate, priority));\n}\n\nfunction findProject(project) {\n    return board.find( (obj) => obj.name === project);\n}\n\nfunction deleteProject(project) {\n    const indexToDelete = board.indexOf(findProject(project));\n    board.splice(indexToDelete, 1);\n}\n\n//for testing\ncreateProject(\"default\");\ncreateToDo(\"Test\", \"This is a test\", \"anymtime\", \"no priority\", \"default\");\n\nconsole.table(findProject(\"default\").toDoList);\n\ncreateToDo(\"Test2\", \"This is a test\", \"anymtime\", \"no priority\", \"default\");\n\nconsole.table(findProject(\"default\").toDoList);\n\nfindProject(\"default\").deleteToDo(\"Test2\");\n\nconsole.table(findProject(\"default\").toDoList);\n\ncreateProject(\"default2\");\n\nconsole.table(board);\n\ndeleteProject(\"default2\");\n\nconsole.table(board);\n\n_displaycontroller_js__WEBPACK_IMPORTED_MODULE_0__.default.renderNavBar(board);\n\n//# sourceURL=webpack://todo-list/./src/index.js?");
 
 /***/ }),
 
