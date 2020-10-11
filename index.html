@@ -16,9 +16,49 @@
             <!--dynamically created-->
         </div>
     </div>
+
     <div id="todo-list">
         <!--dynamically created-->
     </div>
+
+    <div id="new-project-form">
+        <div>
+            <label for="project-name">Name of the project</label>
+            <input id="project-name">
+        </div>
+        <div>
+            <button id="create-project">Create project</button>
+        </div>
+    </div>
+
+    <div id="new-todo-form">
+        <div>
+            <label for="todo-name">Name of the To-Do</label>
+            <input id="todo-name">
+        </div>
+        <div>
+            <label for="todo-descr">Description</label>
+            <textarea id="todo-descr"></textarea>
+        </div>
+        <div>
+            <label for="todo-date">Due date</label>
+            <input type="date" id="todo-date">
+        </div>
+        <div>
+            <label for="todo-priority">Name of the To-Do</label>
+            <select id="todo-priority">
+                <option value="5">Highest</option>
+                <option value="4">High</option>
+                <option value="3" selected>Medium</option>
+                <option value="2">Low</option>
+                <option value="1">Lowest</option>
+            </select>
+        </div>
+        <div>
+            <button id="create-todo">Create To-Do</button>
+        </div>
+    </div>
+    
     <script src="main.js"></script>
 </body>
 
