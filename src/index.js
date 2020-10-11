@@ -32,7 +32,23 @@ const boardController = (() => {
     return {getBoard, createProject, createToDo, findProject, deleteProject};
 })();
 
+//this will become the coordinator for the whole thing
+const createProjectBtn = document.querySelector("#create-project");
+const createToDoBtn = document.querySelector("#create-todo");
 
+const newProjectName = document.querySelector("#project-name");
+
+createProjectBtn.addEventListener("click", () => createProject(newProjectName.value) );
+createToDoBtn.addEventListener("click", () => createToDo(name, description, dueDate, priority, project) );
+
+function createProject(name) {
+    boardController.createProject(name);
+    displayController.renderNavBar(boardController.getBoard());
+}
+
+function createToDo(name, description, dueDate, priority, project) {
+    //not yet implemented
+}
 
 //for testing
 boardController.createProject("default");
