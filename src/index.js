@@ -3,33 +3,35 @@ import "./style.css";
 
 import ToDo from "./todo.js";
 import Project from "./project.js";
-import displayController from "./displaycontroller.js"
+import displayController from "./displaycontroller.js";
 
 const boardController = (() => {
-    let board = [];
+  let board = [];
 
-    function getBoard() {
-        return board;
-    }
+  function getBoard() {
+    return board;
+  }
 
-    function createProject(name) {
-        board.push(new Project(name));
-    }
-    
-    function createToDo(name, description, dueDate, priority, project) {
-        findProject(project).addToDo(new ToDo(name, description, dueDate, priority));
-    }
-    
-    function findProject(project) {
-        return board.find( (obj) => obj.name === project);
-    }
-    
-    function deleteProject(project) {
-        const indexToDelete = board.indexOf(findProject(project));
-        board.splice(indexToDelete, 1);
-    }
+  function createProject(name) {
+    board.push(new Project(name));
+  }
 
-    return {getBoard, createProject, createToDo, findProject, deleteProject};
+  function createToDo(name, description, dueDate, priority, project) {
+    findProject(project).addToDo(
+      new ToDo(name, description, dueDate, priority)
+    );
+  }
+
+  function findProject(project) {
+    return board.find((obj) => obj.name === project);
+  }
+
+  function deleteProject(project) {
+    const indexToDelete = board.indexOf(findProject(project));
+    board.splice(indexToDelete, 1);
+  }
+
+  return { getBoard, createProject, createToDo, findProject, deleteProject };
 })();
 
 //this will become the coordinator for the whole thing
@@ -38,25 +40,41 @@ const createToDoBtn = document.querySelector("#create-todo");
 
 const newProjectName = document.querySelector("#project-name");
 
-createProjectBtn.addEventListener("click", () => createProject(newProjectName.value) );
-createToDoBtn.addEventListener("click", () => createToDo(name, description, dueDate, priority, project) );
+createProjectBtn.addEventListener("click", () =>
+  createProject(newProjectName.value)
+);
+createToDoBtn.addEventListener("click", () =>
+  createToDo(name, description, dueDate, priority, project)
+);
 
 function createProject(name) {
-    boardController.createProject(name);
-    displayController.renderNavBar(boardController.getBoard());
+  boardController.createProject(name);
+  displayController.renderNavBar(boardController.getBoard());
 }
 
 function createToDo(name, description, dueDate, priority, project) {
-    //not yet implemented
+  //not yet implemented
 }
 
 //for testing
 boardController.createProject("default");
-boardController.createToDo("Test", "This is a test", "anymtime", "no priority", "default");
+boardController.createToDo(
+  "Test",
+  "This is a test",
+  "anymtime",
+  "no priority",
+  "default"
+);
 
 console.table(boardController.findProject("default").toDoList);
 
-boardController.createToDo("Test2", "This is a test", "anymtime", "no priority", "default");
+boardController.createToDo(
+  "Test2",
+  "This is a test",
+  "anymtime",
+  "no priority",
+  "default"
+);
 
 console.table(boardController.findProject("default").toDoList);
 
