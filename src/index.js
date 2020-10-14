@@ -12,21 +12,34 @@ import displayController from "./displaycontroller";
   }
 
   function createToDo(name, description, dueDate, priority, project) {
-    // not yet implemented
+    boardController.createToDo(name, description, dueDate, priority, project);
+    // add to DOM
+    console.table(boardController.findProject("default").toDoList);
   }
 
   // cacheDom
   const createProjectBtn = document.querySelector("#create-project");
   const createToDoBtn = document.querySelector("#create-todo");
 
-  const newProjectName = document.querySelector("#project-name");
+  const newProjectName = document.querySelector("#project-name").value;
+  const newToDoName = document.querySelector("#todo-name").value;
+  const newToDoDescription = document.querySelector("#todo-descr").value;
+  const newToDoDate = document.querySelector("#todo-date").value;
+  const newToDoPriority = document.querySelector("#todo-priority").value;
+  const projectToAddTo = document.querySelector("#project-to-add-to").value;
 
   // add listeners
   createProjectBtn.addEventListener("click", () =>
-    createProject(newProjectName.value)
+    createProject(newProjectName)
   );
   createToDoBtn.addEventListener("click", () =>
-    createToDo(name, description, dueDate, priority, project)
+    createToDo(
+      newToDoName,
+      newToDoDescription,
+      newToDoDate,
+      newToDoPriority,
+      projectToAddTo
+    )
   );
 
   // for testing
