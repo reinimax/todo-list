@@ -7,6 +7,7 @@ const displayController = (() => {
   const navBarLinks = document.querySelector("#navbar-links");
   const newProjectForm = document.querySelector("#new-project-form");
   const newToDoForm = document.querySelector("#new-todo-form");
+  const projectDropdown = document.querySelector("#project-to-add-to");
 
   function setVisible(popupBox) {
     popupBox.classList.add("visible");
@@ -40,7 +41,17 @@ const displayController = (() => {
     }
   }
 
-  return { renderNavBar };
+  function renderProjectDropdown(arrayToRender) {
+    clearDisplayElement(projectDropdown);
+    for (let i = 0; i < arrayToRender.length; i += 1) {
+      const option = document.createElement("option");
+      option.textContent = arrayToRender[i].name;
+      option.value = arrayToRender[i].name;
+      projectDropdown.appendChild(option);
+    }
+  }
+
+  return { renderNavBar, renderProjectDropdown };
 })();
 
 export default displayController;

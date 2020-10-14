@@ -20,6 +20,7 @@ import displayController from "./displaycontroller";
   // cacheDom
   const createProjectBtn = document.querySelector("#create-project");
   const createToDoBtn = document.querySelector("#create-todo");
+  const newToDoBtn = document.querySelector("#new-todo");
 
   const newProjectName = document.querySelector("#project-name").value;
   const newToDoName = document.querySelector("#todo-name").value;
@@ -40,6 +41,9 @@ import displayController from "./displaycontroller";
       newToDoPriority,
       projectToAddTo
     )
+  );
+  newToDoBtn.addEventListener("click", () =>
+    displayController.renderProjectDropdown(boardController.getBoard())
   );
 
   // for testing
