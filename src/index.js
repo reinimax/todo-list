@@ -5,6 +5,8 @@ import boardController from "./boardcontroller";
 import displayController from "./displaycontroller";
 
 (function coordinator() {
+  let currentProject = boardController.findProject("default");
+
   // cacheDom
   const createProjectBtn = document.querySelector("#create-project");
   const createToDoBtn = document.querySelector("#create-todo");
@@ -25,8 +27,11 @@ import displayController from "./displaycontroller";
 
   function createToDo(name, description, dueDate, priority, project) {
     boardController.createToDo(name, description, dueDate, priority, project);
-    displayController.renderToDoList(boardController.findProject(project));
+    currentProject = boardController.findProject(project);
+    displayController.renderToDoList(currentProject);
   }
+
+  function deleteToDo(e) {}
 
   // add listeners
   createProjectBtn.addEventListener("click", () =>
