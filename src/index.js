@@ -1,12 +1,12 @@
 import "./reset.css";
 import "./style.css";
 
-import ToDo from "./todo.js";
-import Project from "./project.js";
-import displayController from "./displaycontroller.js";
+import ToDo from "./todo";
+import Project from "./project";
+import displayController from "./displaycontroller";
 
 const boardController = (() => {
-  let board = [];
+  const board = [];
 
   function getBoard() {
     return board;
@@ -34,7 +34,7 @@ const boardController = (() => {
   return { getBoard, createProject, createToDo, findProject, deleteProject };
 })();
 
-//this will become the coordinator for the whole thing
+// this will become the coordinator for the whole thing
 const createProjectBtn = document.querySelector("#create-project");
 const createToDoBtn = document.querySelector("#create-todo");
 
@@ -53,10 +53,10 @@ function createProject(name) {
 }
 
 function createToDo(name, description, dueDate, priority, project) {
-  //not yet implemented
+  // not yet implemented
 }
 
-//for testing
+// for testing
 boardController.createProject("default");
 boardController.createToDo(
   "Test",
