@@ -5,18 +5,6 @@ import boardController from "./boardcontroller";
 import displayController from "./displaycontroller";
 
 (function coordinator() {
-  // functions
-  function createProject(name) {
-    boardController.createProject(name);
-    displayController.renderNavBar(boardController.getBoard());
-  }
-
-  function createToDo(name, description, dueDate, priority, project) {
-    boardController.createToDo(name, description, dueDate, priority, project);
-    // add to DOM
-    console.table(boardController.findProject("default").toDoList);
-  }
-
   // cacheDom
   const createProjectBtn = document.querySelector("#create-project");
   const createToDoBtn = document.querySelector("#create-todo");
@@ -28,6 +16,17 @@ import displayController from "./displaycontroller";
   const newToDoDate = document.querySelector("#todo-date");
   const newToDoPriority = document.querySelector("#todo-priority");
   const projectToAddTo = document.querySelector("#project-to-add-to");
+
+  // functions
+  function createProject(name) {
+    boardController.createProject(name);
+    displayController.renderNavBar(boardController.getBoard());
+  }
+
+  function createToDo(name, description, dueDate, priority, project) {
+    boardController.createToDo(name, description, dueDate, priority, project);
+    displayController.renderToDoList(boardController.findProject(project));
+  }
 
   // add listeners
   createProjectBtn.addEventListener("click", () =>
@@ -49,7 +48,7 @@ import displayController from "./displaycontroller";
   // for testing
   boardController.createProject("default");
   boardController.createToDo(
-    "Test",
+    "Lets see",
     "This is a test",
     "anymtime",
     "no priority",

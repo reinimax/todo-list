@@ -8,6 +8,7 @@ const displayController = (() => {
   const newProjectForm = document.querySelector("#new-project-form");
   const newToDoForm = document.querySelector("#new-todo-form");
   const projectDropdown = document.querySelector("#project-to-add-to");
+  const toDoList = document.querySelector("#todo-list");
 
   function setVisible(popupBox) {
     popupBox.classList.add("visible");
@@ -51,7 +52,45 @@ const displayController = (() => {
     }
   }
 
-  return { renderNavBar, renderProjectDropdown };
+  function renderToDoList(projectToRender) {
+    console.log(toDoList.firstElementChild);
+    while (toDoList.firstElementChild.childNodes.length > 1) {
+      toDoList.firstElementChild.lastChild.remove();
+    }
+    for (let i = 0; i < projectToRender.toDoList.length; i += 1) {
+      const newRow = document.createElement("tr");
+
+      const checkbox = document.createElement("input");
+      checkbox.setAttribute("type", "checkbox");
+
+      const toDoName = document.createElement("td");
+      toDoName.textContent = projectToRender.toDoList[i].title;
+
+      const toDoDescr = document.createElement("td");
+      toDoDescr.textContent = projectToRender.toDoList[i].description;
+
+      const toDoDate = document.createElement("td");
+      toDoDate.textContent = projectToRender.toDoList[i].dueDate;
+
+      const toDoPriority = document.createElement("td");
+      toDoPriority.textContent = projectToRender.toDoList[i].priority;
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "Delete";
+
+      newRow.appendChild(checkbox);
+      newRow.appendChild(toDoName);
+      newRow.appendChild(toDoDescr);
+      newRow.appendChild(toDoDate);
+      newRow.appendChild(toDoPriority);
+      newRow.appendChild(deleteBtn);
+
+      // firstElementChild === tbody
+      toDoList.firstElementChild.appendChild(newRow);
+    }
+  }
+
+  return { renderNavBar, renderProjectDropdown, renderToDoList };
 })();
 
 export default displayController;
