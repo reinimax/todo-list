@@ -22,24 +22,24 @@ import displayController from "./displaycontroller";
   const createToDoBtn = document.querySelector("#create-todo");
   const newToDoBtn = document.querySelector("#new-todo");
 
-  const newProjectName = document.querySelector("#project-name").value;
-  const newToDoName = document.querySelector("#todo-name").value;
-  const newToDoDescription = document.querySelector("#todo-descr").value;
-  const newToDoDate = document.querySelector("#todo-date").value;
-  const newToDoPriority = document.querySelector("#todo-priority").value;
-  const projectToAddTo = document.querySelector("#project-to-add-to").value;
+  const newProjectName = document.querySelector("#project-name");
+  const newToDoName = document.querySelector("#todo-name");
+  const newToDoDescription = document.querySelector("#todo-descr");
+  const newToDoDate = document.querySelector("#todo-date");
+  const newToDoPriority = document.querySelector("#todo-priority");
+  const projectToAddTo = document.querySelector("#project-to-add-to");
 
   // add listeners
   createProjectBtn.addEventListener("click", () =>
-    createProject(newProjectName)
+    createProject(newProjectName.value)
   );
   createToDoBtn.addEventListener("click", () =>
     createToDo(
-      newToDoName,
-      newToDoDescription,
-      newToDoDate,
-      newToDoPriority,
-      projectToAddTo
+      newToDoName.value,
+      newToDoDescription.value,
+      newToDoDate.value,
+      newToDoPriority.value,
+      projectToAddTo.value
     )
   );
   newToDoBtn.addEventListener("click", () =>
