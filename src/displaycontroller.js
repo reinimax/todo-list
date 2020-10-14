@@ -77,6 +77,8 @@ const displayController = (() => {
 
       const deleteBtn = document.createElement("button");
       deleteBtn.textContent = "Delete";
+      deleteBtn.setAttribute("data-index", `${i}`);
+      deleteBtn.setAttribute("class", "delete-btn");
 
       newRow.appendChild(checkbox);
       newRow.appendChild(toDoName);

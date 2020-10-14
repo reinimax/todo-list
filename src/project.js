@@ -16,12 +16,7 @@ export default class Project {
     this.toDoList.push(item);
   }
 
-  findToDo(item) {
-    return this.toDoList.find((obj) => obj.title === item);
-  }
-
-  deleteToDo(item) {
-    const indexToDelete = this.toDoList.indexOf(this.findToDo(item));
-    this.toDoList.splice(indexToDelete, 1);
+  deleteToDo(index) {
+    this.toDoList.splice(index, 1);
   }
 }

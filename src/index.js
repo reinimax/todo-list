@@ -20,6 +20,19 @@ import displayController from "./displaycontroller";
   const projectToAddTo = document.querySelector("#project-to-add-to");
 
   // functions
+  function deleteToDo(e) {
+    currentProject.deleteToDo(e.target.getAttribute("data-index"));
+    displayController.renderToDoList(currentProject);
+    // NOTE: I want to call this function everytime when I render the To-Do list. There has to be a better way of coupling these.
+    setDeleteListeners();
+  }
+
+  // I set the listeners here and not in displaycontroller because this modifies also the logic.
+  function setDeleteListeners() {
+    const deleteBtns = document.querySelectorAll(".delete-btn");
+    deleteBtns.forEach((btn) => btn.addEventListener("click", deleteToDo));
+  }
+
   function createProject(name) {
     boardController.createProject(name);
     displayController.renderNavBar(boardController.getBoard());
@@ -29,9 +42,9 @@ import displayController from "./displaycontroller";
     boardController.createToDo(name, description, dueDate, priority, project);
     currentProject = boardController.findProject(project);
     displayController.renderToDoList(currentProject);
+    // NOTE: I want to call this function everytime when I render the To-Do list. There has to be a better way of coupling these.
+    setDeleteListeners();
   }
-
-  function deleteToDo(e) {}
 
   // add listeners
   createProjectBtn.addEventListener("click", () =>
