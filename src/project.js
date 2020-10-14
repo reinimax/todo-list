@@ -17,7 +17,7 @@ export default class Project {
   }
 
   findToDo(item) {
-    return this.toDoList.find((obj) => obj.name === item);
+    return this.toDoList.find((obj) => obj.title === item);
   }
 
   deleteToDo(item) {
