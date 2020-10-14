@@ -1,38 +1,8 @@
 import "./reset.css";
 import "./style.css";
 
-import ToDo from "./todo";
-import Project from "./project";
+import boardController from "./boardcontroller";
 import displayController from "./displaycontroller";
-
-const boardController = (() => {
-  const board = [];
-
-  function getBoard() {
-    return board;
-  }
-
-  function createProject(name) {
-    board.push(new Project(name));
-  }
-
-  function createToDo(name, description, dueDate, priority, project) {
-    findProject(project).addToDo(
-      new ToDo(name, description, dueDate, priority)
-    );
-  }
-
-  function findProject(project) {
-    return board.find((obj) => obj.name === project);
-  }
-
-  function deleteProject(project) {
-    const indexToDelete = board.indexOf(findProject(project));
-    board.splice(indexToDelete, 1);
-  }
-
-  return { getBoard, createProject, createToDo, findProject, deleteProject };
-})();
 
 // this will become the coordinator for the whole thing
 const createProjectBtn = document.querySelector("#create-project");
