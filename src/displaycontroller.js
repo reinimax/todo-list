@@ -37,6 +37,7 @@ const displayController = (() => {
     for (let i = 0; i < arrayToRender.length; i += 1) {
       const btn = document.createElement("button");
       btn.textContent = arrayToRender[i].name;
+      btn.setAttribute("class", "navbar-btn");
       // add a listener
       navBarLinks.appendChild(btn);
     }
