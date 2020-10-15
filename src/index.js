@@ -22,15 +22,18 @@ import displayController from "./displaycontroller";
   // functions
   function deleteToDo(e) {
     currentProject.deleteToDo(e.target.getAttribute("data-index"));
-    displayController.renderToDoList(currentProject);
-    // NOTE: I want to call this function everytime when I render the To-Do list. There has to be a better way of coupling these.
-    setDeleteListeners();
+    renderToDo();
   }
 
   // I set the listeners here and not in displaycontroller because this modifies also the logic.
   function setDeleteListeners() {
     const deleteBtns = document.querySelectorAll(".delete-btn");
     deleteBtns.forEach((btn) => btn.addEventListener("click", deleteToDo));
+  }
+
+  function renderToDo() {
+    displayController.renderToDoList(currentProject);
+    setDeleteListeners();
   }
 
   function createProject(name) {
@@ -41,9 +44,7 @@ import displayController from "./displaycontroller";
   function createToDo(name, description, dueDate, priority, project) {
     boardController.createToDo(name, description, dueDate, priority, project);
     currentProject = boardController.findProject(project);
-    displayController.renderToDoList(currentProject);
-    // NOTE: I want to call this function everytime when I render the To-Do list. There has to be a better way of coupling these.
-    setDeleteListeners();
+    renderToDo();
   }
 
   // add listeners
