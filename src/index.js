@@ -1,6 +1,8 @@
 import "./reset.css";
 import "./style.css";
 
+import PubSub from "pubsub-js";
+
 import boardController from "./boardcontroller";
 import displayController from "./displaycontroller";
 
@@ -20,20 +22,9 @@ import displayController from "./displaycontroller";
   const projectToAddTo = document.querySelector("#project-to-add-to");
 
   // functions
-  function deleteToDo(e) {
-    currentProject.deleteToDo(e.target.getAttribute("data-index"));
-    renderToDo();
-  }
-
-  // I set the listeners here and not in displaycontroller because this modifies also the logic.
-  function setDeleteListeners() {
-    const deleteBtns = document.querySelectorAll(".delete-btn");
-    deleteBtns.forEach((btn) => btn.addEventListener("click", deleteToDo));
-  }
-
-  function renderToDo() {
+  function deleteToDo(target) {
+    currentProject.deleteToDo(target);
     displayController.renderToDoList(currentProject);
-    setDeleteListeners();
   }
 
   function createProject(name) {
@@ -44,8 +35,14 @@ import displayController from "./displaycontroller";
   function createToDo(name, description, dueDate, priority, project) {
     boardController.createToDo(name, description, dueDate, priority, project);
     currentProject = boardController.findProject(project);
-    renderToDo();
+    displayController.renderToDoList(currentProject);
   }
+
+  // Subscriptions
+  const DELETE_CLICKED = "delete-clicked";
+  PubSub.subscribe(DELETE_CLICKED, (target) => {
+    deleteToDo(target);
+  });
 
   // add listeners
   createProjectBtn.addEventListener("click", () =>

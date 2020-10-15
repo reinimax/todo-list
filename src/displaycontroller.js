@@ -1,3 +1,5 @@
+import PubSub from "pubsub-js";
+
 import deleteIcon from "./recycle-bin-line.svg";
 
 const displayController = (() => {
@@ -56,7 +58,6 @@ const displayController = (() => {
   }
 
   function renderToDoList(projectToRender) {
-    console.log(toDoList.firstElementChild);
     while (toDoList.firstElementChild.childNodes.length > 1) {
       toDoList.firstElementChild.lastChild.remove();
     }
@@ -85,8 +86,11 @@ const displayController = (() => {
       deleteBtnIcon.setAttribute("src", deleteIcon);
       deleteBtnIcon.setAttribute("alt", "delete");
       deleteBtnIcon.setAttribute("class", "delete-icon");
-
       deleteBtn.appendChild(deleteBtnIcon);
+      const DELETE_CLICKED = "delete-clicked";
+      deleteBtn.addEventListener("click", (e) => {
+        PubSub.publish(DELETE_CLICKED, e.target.getAttribute("data-index"));
+      });
 
       newRow.appendChild(checkbox);
       newRow.appendChild(toDoName);
