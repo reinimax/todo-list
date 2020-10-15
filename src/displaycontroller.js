@@ -1,3 +1,5 @@
+import deleteIcon from "./recycle-bin-line.svg";
+
 const displayController = (() => {
   // cacheDOM
   const newProjectBtn = document.querySelector("#new-project");
@@ -77,9 +79,14 @@ const displayController = (() => {
       toDoPriority.textContent = projectToRender.toDoList[i].priority;
 
       const deleteBtn = document.createElement("button");
-      deleteBtn.textContent = "Delete";
       deleteBtn.setAttribute("data-index", `${i}`);
       deleteBtn.setAttribute("class", "delete-btn");
+      const deleteBtnIcon = document.createElement("img");
+      deleteBtnIcon.setAttribute("src", deleteIcon);
+      deleteBtnIcon.setAttribute("alt", "delete");
+      deleteBtnIcon.setAttribute("class", "delete-icon");
+
+      deleteBtn.appendChild(deleteBtnIcon);
 
       newRow.appendChild(checkbox);
       newRow.appendChild(toDoName);
