@@ -7,8 +7,6 @@ import boardController from "./boardcontroller";
 import displayController from "./displaycontroller";
 
 (function coordinator() {
-  let currentProject = boardController.findProject("default");
-
   // cacheDom
   const createProjectBtn = document.querySelector("#create-project");
   const createToDoBtn = document.querySelector("#create-todo");
@@ -20,6 +18,8 @@ import displayController from "./displaycontroller";
   const newToDoDate = document.querySelector("#todo-date");
   const newToDoPriority = document.querySelector("#todo-priority");
   const projectToAddTo = document.querySelector("#project-to-add-to");
+
+  let currentProject;
 
   // functions
   function deleteToDo(target) {
@@ -36,6 +36,18 @@ import displayController from "./displaycontroller";
     currentProject = project;
   }
 
+  function deleteProject(index) {
+    const TEMP = boardController.getBoard();
+    const PROJECT_TO_DELETE = TEMP[index];
+
+    if (PROJECT_TO_DELETE === currentProject) {
+      displayController.clearToDoList();
+    }
+
+    boardController.deleteProject(index);
+    displayController.renderNavBar(boardController.getBoard());
+  }
+
   function createToDo(name, description, dueDate, priority, project) {
     boardController.createToDo(name, description, dueDate, priority, project);
     changeProject(boardController.findProject(project));
@@ -43,6 +55,11 @@ import displayController from "./displaycontroller";
   }
 
   // Subscriptions
+  const DELETE_PROJECT_CLICKED = "delete-project-clicked";
+  PubSub.subscribe(DELETE_PROJECT_CLICKED, (_tag, index) => {
+    deleteProject(index);
+  });
+
   const DELETE_CLICKED = "delete-clicked";
   PubSub.subscribe(DELETE_CLICKED, (_tag, target) => {
     deleteToDo(target);
@@ -70,8 +87,10 @@ import displayController from "./displaycontroller";
     displayController.renderProjectDropdown(boardController.getBoard())
   );
 
-  // for testing
+  // for testing/init
   boardController.createProject("default");
+  changeProject(boardController.findProject("default"));
+
   boardController.createToDo(
     "Lets see",
     "This is a test",
@@ -80,8 +99,6 @@ import displayController from "./displaycontroller";
     "default"
   );
 
-  console.table(boardController.findProject("default").toDoList);
-
   boardController.createToDo(
     "Test2",
     "This is a test",
@@ -89,20 +106,6 @@ import displayController from "./displaycontroller";
     "no priority",
     "default"
   );
-
-  console.table(boardController.findProject("default").toDoList);
-
-  boardController.findProject("default").deleteToDo("Test2");
-
-  console.table(boardController.findProject("default").toDoList);
-
-  boardController.createProject("default2");
-
-  console.table(boardController.getBoard());
-
-  boardController.deleteProject("default2");
-
-  console.table(boardController.getBoard());
 
   displayController.renderNavBar(boardController.getBoard());
 })();

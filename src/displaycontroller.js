@@ -29,6 +29,13 @@ const displayController = (() => {
     }
   }
 
+  function clearToDoList() {
+    // firstElementChild === tbody
+    while (toDoList.firstElementChild.childNodes.length > 1) {
+      toDoList.firstElementChild.lastChild.remove();
+    }
+  }
+
   // add listeners
   newProjectBtn.addEventListener("click", () => setVisible(newProjectForm));
   newToDoBtn.addEventListener("click", () => setVisible(newToDoForm));
@@ -50,9 +57,7 @@ const displayController = (() => {
   }
 
   function renderToDoList(projectToRender) {
-    while (toDoList.firstElementChild.childNodes.length > 1) {
-      toDoList.firstElementChild.lastChild.remove();
-    }
+    clearToDoList();
     for (let i = 0; i < projectToRender.toDoList.length; i += 1) {
       const newRow = document.createElement("tr");
 
@@ -81,7 +86,10 @@ const displayController = (() => {
       deleteBtn.appendChild(deleteBtnIcon);
       const DELETE_CLICKED = "delete-clicked";
       deleteBtn.addEventListener("click", (e) => {
-        PubSub.publish(DELETE_CLICKED, e.target.getAttribute("data-index"));
+        PubSub.publish(
+          DELETE_CLICKED,
+          e.currentTarget.getAttribute("data-index")
+        );
       });
 
       newRow.appendChild(checkbox);
@@ -100,20 +108,42 @@ const displayController = (() => {
     clearDisplayElement(navBarLinks);
     for (let i = 0; i < arrayToRender.length; i += 1) {
       const CURRENT_PROJECT = arrayToRender[i];
+
+      const container = document.createElement("div");
+
       const btn = document.createElement("button");
       btn.textContent = CURRENT_PROJECT.name;
       btn.setAttribute("class", "navbar-btn");
-      btn.setAttribute("data-index", `${i}`);
       btn.addEventListener("click", () => {
         const PROJECT_CHANGED = "project-changed";
         PubSub.publish(PROJECT_CHANGED, CURRENT_PROJECT);
         renderToDoList(CURRENT_PROJECT);
       });
-      navBarLinks.appendChild(btn);
+
+      const deletePRoj = document.createElement("button");
+      deletePRoj.setAttribute("data-index", `${i}`);
+      deletePRoj.setAttribute("class", "delete-btn");
+      const deleteBtnIcon = document.createElement("img");
+      deleteBtnIcon.setAttribute("src", deleteIcon);
+      deleteBtnIcon.setAttribute("alt", "delete");
+      deleteBtnIcon.setAttribute("class", "delete-icon");
+      deletePRoj.appendChild(deleteBtnIcon);
+      const DELETE_PROJECT_CLICKED = "delete-project-clicked";
+      deletePRoj.addEventListener("click", (e) => {
+        PubSub.publish(
+          DELETE_PROJECT_CLICKED,
+          e.currentTarget.getAttribute("data-index")
+        );
+      });
+
+      container.appendChild(btn);
+      container.appendChild(deletePRoj);
+
+      navBarLinks.appendChild(container);
     }
   }
 
-  return { renderNavBar, renderProjectDropdown, renderToDoList };
+  return { renderNavBar, renderProjectDropdown, renderToDoList, clearToDoList };
 })();
 
 export default displayController;

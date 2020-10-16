@@ -16,9 +16,8 @@ const boardController = (() => {
     return board.find((obj) => obj.getName() === project);
   }
 
-  function deleteProject(project) {
-    const indexToDelete = board.indexOf(findProject(project));
-    board.splice(indexToDelete, 1);
+  function deleteProject(index) {
+    board.splice(index, 1);
   }
 
   function createToDo(name, description, dueDate, priority, project) {
