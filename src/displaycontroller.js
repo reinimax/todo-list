@@ -14,6 +14,7 @@ const displayController = (() => {
   const projectDropdown = document.querySelector("#project-to-add-to");
   const toDoList = document.querySelector("#todo-list");
 
+  // utility functions
   function setVisible(popupBox) {
     popupBox.classList.add("visible");
   }
@@ -36,16 +37,7 @@ const displayController = (() => {
   );
   createToDoBtn.addEventListener("click", () => setInvisible(newToDoForm));
 
-  function renderNavBar(arrayToRender) {
-    clearDisplayElement(navBarLinks);
-    for (let i = 0; i < arrayToRender.length; i += 1) {
-      const btn = document.createElement("button");
-      btn.textContent = arrayToRender[i].name;
-      btn.setAttribute("class", "navbar-btn");
-      // add a listener
-      navBarLinks.appendChild(btn);
-    }
-  }
+  // render
 
   function renderProjectDropdown(arrayToRender) {
     clearDisplayElement(projectDropdown);
@@ -101,6 +93,23 @@ const displayController = (() => {
 
       // firstElementChild === tbody
       toDoList.firstElementChild.appendChild(newRow);
+    }
+  }
+
+  function renderNavBar(arrayToRender) {
+    clearDisplayElement(navBarLinks);
+    for (let i = 0; i < arrayToRender.length; i += 1) {
+      const CURRENT_PROJECT = arrayToRender[i];
+      const btn = document.createElement("button");
+      btn.textContent = CURRENT_PROJECT.name;
+      btn.setAttribute("class", "navbar-btn");
+      btn.setAttribute("data-index", `${i}`);
+      btn.addEventListener("click", () => {
+        const PROJECT_CHANGED = "project-changed";
+        PubSub.publish(PROJECT_CHANGED, CURRENT_PROJECT);
+        renderToDoList(CURRENT_PROJECT);
+      });
+      navBarLinks.appendChild(btn);
     }
   }
 

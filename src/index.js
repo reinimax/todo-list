@@ -32,16 +32,25 @@ import displayController from "./displaycontroller";
     displayController.renderNavBar(boardController.getBoard());
   }
 
+  function changeProject(project) {
+    currentProject = project;
+  }
+
   function createToDo(name, description, dueDate, priority, project) {
     boardController.createToDo(name, description, dueDate, priority, project);
-    currentProject = boardController.findProject(project);
+    changeProject(boardController.findProject(project));
     displayController.renderToDoList(currentProject);
   }
 
   // Subscriptions
   const DELETE_CLICKED = "delete-clicked";
-  PubSub.subscribe(DELETE_CLICKED, (target) => {
+  PubSub.subscribe(DELETE_CLICKED, (_tag, target) => {
     deleteToDo(target);
+  });
+
+  const PROJECT_CHANGED = "project-changed";
+  PubSub.subscribe(PROJECT_CHANGED, (_tag, proj) => {
+    changeProject(proj);
   });
 
   // add listeners
