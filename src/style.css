@@ -53,11 +53,11 @@
   padding-left: 30px;
 }
 
-.delete-icon {
+.icon {
   height: 15px;
 }
 
-.delete-btn {
+.icon-btn {
   background-color: transparent;
   border: none;
 }

@@ -8,44 +8,66 @@ import displayController from "./displaycontroller";
 
 (function coordinator() {
   // cacheDom
-  const createProjectBtn = document.querySelector("#create-project");
-  const createToDoBtn = document.querySelector("#create-todo");
+  const saveProjectBtn = document.querySelector("#save-project");
+  const saveToDoBtn = document.querySelector("#save-todo");
+  const newProjectBtn = document.querySelector("#new-project");
   const newToDoBtn = document.querySelector("#new-todo");
 
-  const newProjectName = document.querySelector("#project-name");
-  const newToDoName = document.querySelector("#todo-name");
-  const newToDoDescription = document.querySelector("#todo-descr");
-  const newToDoDate = document.querySelector("#todo-date");
-  const newToDoPriority = document.querySelector("#todo-priority");
+  const projectName = document.querySelector("#project-name");
+  const toDoName = document.querySelector("#todo-name");
+  const toDoDescription = document.querySelector("#todo-descr");
+  const toDoDate = document.querySelector("#todo-date");
+  const toDoPriority = document.querySelector("#todo-priority");
   const projectToAddTo = document.querySelector("#project-to-add-to");
 
+  // variables
   let currentProject;
+  let isNewOrEdit;
 
   // functions
+  function changeCurrentProject(project) {
+    currentProject = project;
+  }
+
   function createProject(name) {
     boardController.createProject(name);
     displayController.renderNavBar(boardController.getBoard());
   }
 
-  function changeProject(project) {
-    currentProject = project;
+  let projectToEdit;
+  function updateProjectName(index) {
+    const board = boardController.getBoard();
+    projectToEdit = board[index];
+    projectName.value = projectToEdit.getName();
   }
 
-  function deleteProject(index) {
-    const temp = boardController.getBoard();
-    const projectToDelete = temp[index];
-
-    if (projectToDelete === currentProject) {
-      displayController.clearToDoList();
-    }
-
-    boardController.deleteProject(index);
+  function editProject() {
+    projectToEdit.setName(projectName.value);
     displayController.renderNavBar(boardController.getBoard());
   }
 
-  function createToDo(name, description, dueDate, priority, project) {
+  function deleteProject(index) {
+    const board = boardController.getBoard();
+    const projectToDelete = board[index];
+
+    boardController.deleteProject(index);
+
+    if (projectToDelete === currentProject) {
+      // if the current project is deleted, make the first project in the list the current one
+      if (board.length > 0) {
+        changeCurrentProject(board[0]);
+        displayController.renderToDoList(currentProject);
+      } else {
+        displayController.clearToDoList();
+      }
+    }
+
+    displayController.renderNavBar(boardController.getBoard());
+  }
+
+  function saveToDo(name, description, dueDate, priority, project) {
     boardController.createToDo(name, description, dueDate, priority, project);
-    changeProject(boardController.findProject(project));
+    changeCurrentProject(boardController.findProject(project));
     displayController.renderToDoList(currentProject);
   }
 
@@ -67,29 +89,42 @@ import displayController from "./displaycontroller";
 
   const PROJECT_CHANGED = "project-changed";
   PubSub.subscribe(PROJECT_CHANGED, (_tag, proj) => {
-    changeProject(proj);
+    changeCurrentProject(proj);
+  });
+
+  const EDIT_PROJECT_CLICKED = "edit-project-clicked";
+  PubSub.subscribe(EDIT_PROJECT_CLICKED, (tag, proj) => {
+    updateProjectName(proj);
+    isNewOrEdit = tag;
   });
 
   // add listeners
-  createProjectBtn.addEventListener("click", () =>
-    createProject(newProjectName.value)
-  );
-  createToDoBtn.addEventListener("click", () =>
-    createToDo(
-      newToDoName.value,
-      newToDoDescription.value,
-      newToDoDate.value,
-      newToDoPriority.value,
+  saveProjectBtn.addEventListener("click", () => {
+    if (isNewOrEdit === "new-project-clicked") {
+      createProject(projectName.value);
+    } else if (isNewOrEdit === "edit-project-clicked") {
+      editProject();
+    }
+  });
+  saveToDoBtn.addEventListener("click", () =>
+    saveToDo(
+      toDoName.value,
+      toDoDescription.value,
+      toDoDate.value,
+      toDoPriority.value,
       projectToAddTo.value
     )
   );
+  newProjectBtn.addEventListener("click", () => {
+    isNewOrEdit = "new-project-clicked";
+  });
   newToDoBtn.addEventListener("click", () =>
     displayController.renderProjectDropdown(boardController.getBoard())
   );
 
   // for testing/init
   boardController.createProject("default");
-  changeProject(boardController.findProject("default"));
+  changeCurrentProject(boardController.findProject("default"));
 
   boardController.createToDo(
     "Lets see",

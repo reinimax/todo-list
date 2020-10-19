@@ -1,16 +1,17 @@
 import PubSub from "pubsub-js";
 
 import deleteIcon from "./recycle-bin-line.svg";
+import editIcon from "./edit-round-line.svg";
 
 const displayController = (() => {
   // cacheDOM
   const newProjectBtn = document.querySelector("#new-project");
   const newToDoBtn = document.querySelector("#new-todo");
-  const createProjectBtn = document.querySelector("#create-project");
-  const createToDoBtn = document.querySelector("#create-todo");
+  const saveProjectBtn = document.querySelector("#save-project");
+  const saveToDoBtn = document.querySelector("#save-todo");
   const navBarLinks = document.querySelector("#navbar-links");
-  const newProjectForm = document.querySelector("#new-project-form");
-  const newToDoForm = document.querySelector("#new-todo-form");
+  const projectForm = document.querySelector("#new-project-form");
+  const toDoForm = document.querySelector("#new-todo-form");
   const projectDropdown = document.querySelector("#project-to-add-to");
   const toDoList = document.querySelector("#todo-list");
   const cancelBtns = document.querySelectorAll(".cancel");
@@ -37,13 +38,23 @@ const displayController = (() => {
     }
   }
 
+  function createIconBtn(alt, source, dataIndex) {
+    const btn = document.createElement("button");
+    btn.setAttribute("data-index", `${dataIndex}`);
+    btn.setAttribute("class", "icon-btn");
+    const btnIcon = document.createElement("img");
+    btnIcon.setAttribute("src", source);
+    btnIcon.setAttribute("alt", alt);
+    btnIcon.setAttribute("class", "icon");
+    btn.appendChild(btnIcon);
+    return btn;
+  }
+
   // add listeners
-  newProjectBtn.addEventListener("click", () => setVisible(newProjectForm));
-  newToDoBtn.addEventListener("click", () => setVisible(newToDoForm));
-  createProjectBtn.addEventListener("click", () =>
-    setInvisible(newProjectForm)
-  );
-  createToDoBtn.addEventListener("click", () => setInvisible(newToDoForm));
+  newProjectBtn.addEventListener("click", () => setVisible(projectForm));
+  newToDoBtn.addEventListener("click", () => setVisible(toDoForm));
+  saveProjectBtn.addEventListener("click", () => setInvisible(projectForm));
+  saveToDoBtn.addEventListener("click", () => setInvisible(toDoForm));
   cancelBtns.forEach((btn) =>
     btn.addEventListener("click", (e) => {
       setInvisible(e.currentTarget.parentNode.parentNode);
@@ -82,14 +93,12 @@ const displayController = (() => {
       const toDoPriority = document.createElement("td");
       toDoPriority.textContent = projectToRender.toDoList[i].priority;
 
-      const deleteBtn = document.createElement("button");
-      deleteBtn.setAttribute("data-index", `${i}`);
-      deleteBtn.setAttribute("class", "delete-btn");
-      const deleteBtnIcon = document.createElement("img");
-      deleteBtnIcon.setAttribute("src", deleteIcon);
-      deleteBtnIcon.setAttribute("alt", "delete");
-      deleteBtnIcon.setAttribute("class", "delete-icon");
-      deleteBtn.appendChild(deleteBtnIcon);
+      const editCell = document.createElement("td");
+      const editBtn = createIconBtn("edit", editIcon, i);
+      editCell.appendChild(editBtn);
+
+      const deleteCell = document.createElement("td");
+      const deleteBtn = createIconBtn("delete", deleteIcon, i);
       const DELETE_CLICKED = "delete-clicked";
       deleteBtn.addEventListener("click", (e) => {
         PubSub.publish(
@@ -97,13 +106,15 @@ const displayController = (() => {
           e.currentTarget.getAttribute("data-index")
         );
       });
+      deleteCell.appendChild(deleteBtn);
 
       newRow.appendChild(checkbox);
       newRow.appendChild(toDoName);
       newRow.appendChild(toDoDescr);
       newRow.appendChild(toDoDate);
       newRow.appendChild(toDoPriority);
-      newRow.appendChild(deleteBtn);
+      newRow.appendChild(editCell);
+      newRow.appendChild(deleteCell);
 
       // firstElementChild === tbody
       toDoList.firstElementChild.appendChild(newRow);
@@ -126,14 +137,17 @@ const displayController = (() => {
         renderToDoList(CURRENT_PROJECT);
       });
 
-      const deletePRoj = document.createElement("button");
-      deletePRoj.setAttribute("data-index", `${i}`);
-      deletePRoj.setAttribute("class", "delete-btn");
-      const deleteBtnIcon = document.createElement("img");
-      deleteBtnIcon.setAttribute("src", deleteIcon);
-      deleteBtnIcon.setAttribute("alt", "delete");
-      deleteBtnIcon.setAttribute("class", "delete-icon");
-      deletePRoj.appendChild(deleteBtnIcon);
+      const editPRoj = createIconBtn("edit", editIcon, i);
+      const EDIT_PROJECT_CLICKED = "edit-project-clicked";
+      editPRoj.addEventListener("click", (e) => {
+        PubSub.publish(
+          EDIT_PROJECT_CLICKED,
+          e.currentTarget.getAttribute("data-index")
+        );
+        setVisible(projectForm);
+      });
+
+      const deletePRoj = createIconBtn("delete", deleteIcon, i);
       const DELETE_PROJECT_CLICKED = "delete-project-clicked";
       deletePRoj.addEventListener("click", (e) => {
         PubSub.publish(
@@ -143,6 +157,7 @@ const displayController = (() => {
       });
 
       container.appendChild(btn);
+      container.appendChild(editPRoj);
       container.appendChild(deletePRoj);
 
       navBarLinks.appendChild(container);
