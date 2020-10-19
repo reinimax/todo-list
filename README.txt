@@ -2,6 +2,13 @@ This is my take on a To-Do list app that lets the user create, edit and delete p
 
 Work in progress.
 
+Update:
+Now it's time to make things smoother and more comfortable.
+I will add cancel-buttons to my forms. I think I will also rename the create-buttons to simply "Save". This is still
+intuitive and I can re-use these forms later for editing projects/todo's.
+
+--------------------------------------------------------------------------------------------------------------------
+
 So far, the logic for creating projects and to-do items is implemented. Projects and to-do's can also be deleted.
 Added also a display-controller that renders the navbar (which lists all the projects of the user).
 
