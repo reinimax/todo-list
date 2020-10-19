@@ -13,6 +13,7 @@ const displayController = (() => {
   const newToDoForm = document.querySelector("#new-todo-form");
   const projectDropdown = document.querySelector("#project-to-add-to");
   const toDoList = document.querySelector("#todo-list");
+  const cancelBtns = document.querySelectorAll(".cancel");
 
   // utility functions
   function setVisible(popupBox) {
@@ -43,6 +44,11 @@ const displayController = (() => {
     setInvisible(newProjectForm)
   );
   createToDoBtn.addEventListener("click", () => setInvisible(newToDoForm));
+  cancelBtns.forEach((btn) =>
+    btn.addEventListener("click", (e) => {
+      setInvisible(e.currentTarget.parentNode.parentNode);
+    })
+  );
 
   // render
 
