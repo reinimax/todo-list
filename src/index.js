@@ -22,11 +22,6 @@ import displayController from "./displaycontroller";
   let currentProject;
 
   // functions
-  function deleteToDo(target) {
-    currentProject.deleteToDo(target);
-    displayController.renderToDoList(currentProject);
-  }
-
   function createProject(name) {
     boardController.createProject(name);
     displayController.renderNavBar(boardController.getBoard());
@@ -37,10 +32,10 @@ import displayController from "./displaycontroller";
   }
 
   function deleteProject(index) {
-    const TEMP = boardController.getBoard();
-    const PROJECT_TO_DELETE = TEMP[index];
+    const temp = boardController.getBoard();
+    const projectToDelete = temp[index];
 
-    if (PROJECT_TO_DELETE === currentProject) {
+    if (projectToDelete === currentProject) {
       displayController.clearToDoList();
     }
 
@@ -51,6 +46,11 @@ import displayController from "./displaycontroller";
   function createToDo(name, description, dueDate, priority, project) {
     boardController.createToDo(name, description, dueDate, priority, project);
     changeProject(boardController.findProject(project));
+    displayController.renderToDoList(currentProject);
+  }
+
+  function deleteToDo(target) {
+    currentProject.deleteToDo(target);
     displayController.renderToDoList(currentProject);
   }
 
@@ -108,4 +108,5 @@ import displayController from "./displaycontroller";
   );
 
   displayController.renderNavBar(boardController.getBoard());
+  displayController.renderToDoList(currentProject);
 })();
