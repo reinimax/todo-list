@@ -24,6 +24,14 @@ const displayController = (() => {
   const toDoPriority = document.querySelector("#todo-priority");
 
   // utility functions
+  function disable(btn) {
+    btn.setAttribute("disabled", "true");
+  }
+
+  function enable(btn) {
+    btn.removeAttribute("disabled");
+  }
+
   function resetProjectForm() {
     projectName.value = "";
     projectName.focus();
@@ -95,8 +103,11 @@ const displayController = (() => {
     })
   );
 
-  // render
+  // Subscriptions
+  const BOARD_EMPTY = "board-empty";
+  PubSub.subscribe(BOARD_EMPTY, () => disable(newToDoBtn));
 
+  // render
   function renderProjectDropdown(arrayToRender) {
     clearDisplayElement(projectDropdown);
     for (let i = 0; i < arrayToRender.length; i += 1) {
@@ -215,6 +226,7 @@ const displayController = (() => {
     renderToDoList,
     clearToDoList,
     setActive,
+    enable,
   };
 })();
 

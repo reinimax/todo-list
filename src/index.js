@@ -36,6 +36,7 @@ import displayController from "./displaycontroller";
 
   function createProject(name) {
     boardController.createProject(name);
+    displayController.enable(newToDoBtn);
     displayController.renderNavBar(boardController.getBoard());
   }
 
@@ -64,6 +65,8 @@ import displayController from "./displaycontroller";
         displayController.renderToDoList(currentProject);
       } else {
         displayController.clearToDoList();
+        const BOARD_EMPTY = "board-empty";
+        PubSub.publish(BOARD_EMPTY, "");
       }
     }
 
