@@ -1,3 +1,5 @@
+import ToDo from "./todo";
+
 export default class Project {
   constructor(name) {
     this.name = name;
@@ -14,6 +16,10 @@ export default class Project {
 
   addToDo(item) {
     this.toDoList.push(item);
+  }
+
+  findToDoIndex(title) {
+    return this.toDoList.findIndex((item) => item.title === title);
   }
 
   deleteToDo(index) {

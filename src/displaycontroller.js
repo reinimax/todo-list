@@ -95,14 +95,22 @@ const displayController = (() => {
 
       const editCell = document.createElement("td");
       const editBtn = createIconBtn("edit", editIcon, i);
+      const EDIT_TODO_CLICKED = "edit-todo-clicked";
+      editBtn.addEventListener("click", (e) => {
+        PubSub.publish(
+          EDIT_TODO_CLICKED,
+          e.currentTarget.getAttribute("data-index")
+        );
+        setVisible(toDoForm);
+      });
       editCell.appendChild(editBtn);
 
       const deleteCell = document.createElement("td");
       const deleteBtn = createIconBtn("delete", deleteIcon, i);
-      const DELETE_CLICKED = "delete-clicked";
+      const DELETE_TODO_CLICKED = "delete-todo-clicked";
       deleteBtn.addEventListener("click", (e) => {
         PubSub.publish(
-          DELETE_CLICKED,
+          DELETE_TODO_CLICKED,
           e.currentTarget.getAttribute("data-index")
         );
       });

@@ -65,7 +65,7 @@ import displayController from "./displaycontroller";
     displayController.renderNavBar(boardController.getBoard());
   }
 
-  function saveToDo(name, description, dueDate, priority, project) {
+  function createToDo(name, description, dueDate, priority, project) {
     boardController.createToDo(name, description, dueDate, priority, project);
     changeCurrentProject(boardController.findProject(project));
     displayController.renderToDoList(currentProject);
@@ -76,14 +76,45 @@ import displayController from "./displaycontroller";
     displayController.renderToDoList(currentProject);
   }
 
+  let toDoToEdit;
+  function updateToDo(index) {
+    toDoToEdit = currentProject.toDoList[index];
+    toDoName.value = toDoToEdit.title;
+    toDoDescription.value = toDoToEdit.description;
+    toDoDate.value = toDoToEdit.dueDate;
+    toDoPriority.value = toDoToEdit.priority;
+    projectToAddTo.value = currentProject.getName();
+  }
+
+  function editToDo() {
+    toDoToEdit.title = toDoName.value;
+    toDoToEdit.description = toDoDescription.value;
+    toDoToEdit.dueDate = toDoDate.value;
+    toDoToEdit.priority = toDoPriority.value;
+
+    // if the user changed the project
+    if (projectToAddTo.value !== currentProject.getName()) {
+      // delete the todo from the old project
+      deleteToDo(currentProject.findToDoIndex(toDoToEdit));
+      // save the todo in the new project
+      createToDo(
+        toDoToEdit.title,
+        toDoToEdit.description,
+        toDoToEdit.dueDate,
+        toDoToEdit.priority,
+        projectToAddTo.value
+      );
+    }
+  }
+
   // Subscriptions
   const DELETE_PROJECT_CLICKED = "delete-project-clicked";
   PubSub.subscribe(DELETE_PROJECT_CLICKED, (_tag, index) => {
     deleteProject(index);
   });
 
-  const DELETE_CLICKED = "delete-clicked";
-  PubSub.subscribe(DELETE_CLICKED, (_tag, target) => {
+  const DELETE_TODO_CLICKED = "delete-todo-clicked";
+  PubSub.subscribe(DELETE_TODO_CLICKED, (_tag, target) => {
     deleteToDo(target);
   });
 
@@ -98,6 +129,12 @@ import displayController from "./displaycontroller";
     isNewOrEdit = tag;
   });
 
+  const EDIT_TODO_CLICKED = "edit-todo-clicked";
+  PubSub.subscribe(EDIT_TODO_CLICKED, (tag, proj) => {
+    updateToDo(proj);
+    isNewOrEdit = tag;
+  });
+
   // add listeners
   saveProjectBtn.addEventListener("click", () => {
     if (isNewOrEdit === "new-project-clicked") {
@@ -106,21 +143,26 @@ import displayController from "./displaycontroller";
       editProject();
     }
   });
-  saveToDoBtn.addEventListener("click", () =>
-    saveToDo(
-      toDoName.value,
-      toDoDescription.value,
-      toDoDate.value,
-      toDoPriority.value,
-      projectToAddTo.value
-    )
-  );
+  saveToDoBtn.addEventListener("click", () => {
+    if (isNewOrEdit === "new-todo-clicked") {
+      createToDo(
+        toDoName.value,
+        toDoDescription.value,
+        toDoDate.value,
+        toDoPriority.value,
+        projectToAddTo.value
+      );
+    } else if (isNewOrEdit === "edit-todo-clicked") {
+      editToDo();
+    }
+  });
   newProjectBtn.addEventListener("click", () => {
     isNewOrEdit = "new-project-clicked";
   });
-  newToDoBtn.addEventListener("click", () =>
-    displayController.renderProjectDropdown(boardController.getBoard())
-  );
+  newToDoBtn.addEventListener("click", () => {
+    displayController.renderProjectDropdown(boardController.getBoard());
+    isNewOrEdit = "new-todo-clicked";
+  });
 
   // for testing/init
   boardController.createProject("default");
@@ -129,16 +171,16 @@ import displayController from "./displaycontroller";
   boardController.createToDo(
     "Lets see",
     "This is a test",
-    "anymtime",
-    "no priority",
+    "2020-10-31",
+    "3",
     "default"
   );
 
   boardController.createToDo(
     "Test2",
     "This is a test",
-    "anymtime",
-    "no priority",
+    "2020-11-01",
+    "4",
     "default"
   );
 
