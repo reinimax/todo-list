@@ -139,6 +139,7 @@ import displayController from "./displaycontroller";
   const EDIT_TODO_CLICKED = "edit-todo-clicked";
   PubSub.subscribe(EDIT_TODO_CLICKED, (tag, proj) => {
     updateToDo(proj);
+    displayController.renderProjectDropdown(boardController.getBoard());
     isNewOrEdit = tag;
   });
 
