@@ -26,7 +26,12 @@ import displayController from "./displaycontroller";
 
   // functions
   function changeCurrentProject(project) {
+    if (currentProject !== undefined) currentProject.deactivate();
     currentProject = project;
+    currentProject.activate();
+    displayController.setActive(
+      boardController.findIndexOfProject(currentProject.getName())
+    );
   }
 
   function createProject(name) {
@@ -164,26 +169,18 @@ import displayController from "./displaycontroller";
     isNewOrEdit = "new-todo-clicked";
   });
 
-  // for testing/init
+  // init
   boardController.createProject("default");
+  displayController.renderNavBar(boardController.getBoard());
   changeCurrentProject(boardController.findProject("default"));
 
   boardController.createToDo(
-    "Lets see",
+    "Test",
     "This is a test",
     "2020-10-31",
     "3",
     "default"
   );
 
-  boardController.createToDo(
-    "Test2",
-    "This is a test",
-    "2020-11-01",
-    "4",
-    "default"
-  );
-
-  displayController.renderNavBar(boardController.getBoard());
   displayController.renderToDoList(currentProject);
 })();

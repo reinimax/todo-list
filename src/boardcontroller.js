@@ -16,6 +16,10 @@ const boardController = (() => {
     return board.find((obj) => obj.getName() === project);
   }
 
+  function findIndexOfProject(projectname) {
+    return board.findIndex((obj) => obj.getName() === projectname);
+  }
+
   function deleteProject(index) {
     board.splice(index, 1);
   }
@@ -26,7 +30,14 @@ const boardController = (() => {
     );
   }
 
-  return { getBoard, createProject, findProject, deleteProject, createToDo };
+  return {
+    getBoard,
+    createProject,
+    findProject,
+    findIndexOfProject,
+    deleteProject,
+    createToDo,
+  };
 })();
 
 export default boardController;

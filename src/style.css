@@ -29,6 +29,10 @@
   margin: 5px 10px;
 }
 
+.active {
+  background-color: red;
+}
+
 #main {
   position: relative;
   top: 100px;

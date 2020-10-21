@@ -17,6 +17,14 @@ const displayController = (() => {
   const cancelBtns = document.querySelectorAll(".cancel");
 
   // utility functions
+  function setActive(index) {
+    const btnList = navBarLinks.getElementsByClassName("navbar-btn");
+    const btnArray = [...btnList];
+    const btnToActivate = btnArray[index];
+    btnArray.forEach((btn) => btn.classList.remove("active"));
+    btnToActivate.classList.add("active");
+  }
+
   function setVisible(popupBox) {
     popupBox.classList.add("visible");
   }
@@ -169,10 +177,19 @@ const displayController = (() => {
       container.appendChild(deletePRoj);
 
       navBarLinks.appendChild(container);
+
+      // set the navbar btn for the active project active
+      if (CURRENT_PROJECT.getStatus()) setActive(i);
     }
   }
 
-  return { renderNavBar, renderProjectDropdown, renderToDoList, clearToDoList };
+  return {
+    renderNavBar,
+    renderProjectDropdown,
+    renderToDoList,
+    clearToDoList,
+    setActive,
+  };
 })();
 
 export default displayController;

@@ -4,6 +4,19 @@ export default class Project {
   constructor(name) {
     this.name = name;
     this.toDoList = [];
+    this.active = false;
+  }
+
+  activate() {
+    this.active = true;
+  }
+
+  deactivate() {
+    this.active = false;
+  }
+
+  getStatus() {
+    return this.active;
   }
 
   getName() {
