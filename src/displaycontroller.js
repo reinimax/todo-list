@@ -16,7 +16,27 @@ const displayController = (() => {
   const toDoList = document.querySelector("#todo-list");
   const cancelBtns = document.querySelectorAll(".cancel");
 
+  // form fields
+  const projectName = document.querySelector("#project-name");
+  const toDoName = document.querySelector("#todo-name");
+  const toDoDescription = document.querySelector("#todo-descr");
+  const toDoDate = document.querySelector("#todo-date");
+  const toDoPriority = document.querySelector("#todo-priority");
+
   // utility functions
+  function resetProjectForm() {
+    projectName.value = "";
+    projectName.focus();
+  }
+
+  function resettToDoForm() {
+    toDoName.value = "";
+    toDoName.focus();
+    toDoDescription.value = "";
+    toDoDate.value = "";
+    toDoPriority.value = "3";
+  }
+
   function setActive(index) {
     const btnList = navBarLinks.getElementsByClassName("navbar-btn");
     const btnArray = [...btnList];
@@ -59,8 +79,14 @@ const displayController = (() => {
   }
 
   // add listeners
-  newProjectBtn.addEventListener("click", () => setVisible(projectForm));
-  newToDoBtn.addEventListener("click", () => setVisible(toDoForm));
+  newProjectBtn.addEventListener("click", () => {
+    setVisible(projectForm);
+    resetProjectForm();
+  });
+  newToDoBtn.addEventListener("click", () => {
+    setVisible(toDoForm);
+    resettToDoForm();
+  });
   saveProjectBtn.addEventListener("click", () => setInvisible(projectForm));
   saveToDoBtn.addEventListener("click", () => setInvisible(toDoForm));
   cancelBtns.forEach((btn) =>
@@ -89,17 +115,17 @@ const displayController = (() => {
       const checkbox = document.createElement("input");
       checkbox.setAttribute("type", "checkbox");
 
-      const toDoName = document.createElement("td");
-      toDoName.textContent = projectToRender.toDoList[i].title;
+      const name = document.createElement("td");
+      name.textContent = projectToRender.toDoList[i].title;
 
-      const toDoDescr = document.createElement("td");
-      toDoDescr.textContent = projectToRender.toDoList[i].description;
+      const descr = document.createElement("td");
+      descr.textContent = projectToRender.toDoList[i].description;
 
-      const toDoDate = document.createElement("td");
-      toDoDate.textContent = projectToRender.toDoList[i].dueDate;
+      const date = document.createElement("td");
+      date.textContent = projectToRender.toDoList[i].dueDate;
 
-      const toDoPriority = document.createElement("td");
-      toDoPriority.textContent = projectToRender.toDoList[i].priority;
+      const priority = document.createElement("td");
+      priority.textContent = projectToRender.toDoList[i].priority;
 
       const editCell = document.createElement("td");
       const editBtn = createIconBtn("edit", editIcon, i);
@@ -125,10 +151,10 @@ const displayController = (() => {
       deleteCell.appendChild(deleteBtn);
 
       newRow.appendChild(checkbox);
-      newRow.appendChild(toDoName);
-      newRow.appendChild(toDoDescr);
-      newRow.appendChild(toDoDate);
-      newRow.appendChild(toDoPriority);
+      newRow.appendChild(name);
+      newRow.appendChild(descr);
+      newRow.appendChild(date);
+      newRow.appendChild(priority);
       newRow.appendChild(editCell);
       newRow.appendChild(deleteCell);
 

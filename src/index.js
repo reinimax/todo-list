@@ -84,6 +84,8 @@ import displayController from "./displaycontroller";
   let toDoToEdit;
   function updateToDo(index) {
     toDoToEdit = currentProject.toDoList[index];
+
+    // THIS SHOULD ACTUALLY GO INTO DISPLAYCONTROLLER
     toDoName.value = toDoToEdit.title;
     toDoDescription.value = toDoToEdit.description;
     toDoDate.value = toDoToEdit.dueDate;
