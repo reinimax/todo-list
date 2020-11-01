@@ -6,29 +6,31 @@
   </head>
 
   <body>
-    <div id="navbar">
-      <div id="navbar-buttons" class="inner-navbar">
-        <button id="new-project" class="navbar-btn">New project</button>
-        <button id="new-todo" class="navbar-btn">New To-Do</button>
+    <div id="flex-container">
+      <div id="navbar">
+        <div id="navbar-buttons" class="inner-navbar">
+          <button id="new-project" class="navbar-btn">New project</button>
+          <button id="new-todo" class="navbar-btn">New To-Do</button>
+        </div>
+        <div id="navbar-links" class="inner-navbar">
+          <!--dynamically created-->
+        </div>
       </div>
-      <div id="navbar-links" class="inner-navbar">
+
+      <div id="main">
+        <table id="todo-list">
+          <tr>
+            <th>?</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Due?</th>
+            <th>Priority</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </table>
         <!--dynamically created-->
       </div>
-    </div>
-
-    <div id="main">
-      <table id="todo-list">
-        <tr>
-          <th></th>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Due?</th>
-          <th>Priority</th>
-          <th></th>
-          <th></th>
-        </tr>
-      </table>
-      <!--dynamically created-->
     </div>
 
     <div id="new-project-form" class="popup-box">
