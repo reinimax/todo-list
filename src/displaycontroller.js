@@ -2,6 +2,8 @@ import PubSub from "pubsub-js";
 
 import deleteIcon from "./recycle-bin-line.svg";
 import editIcon from "./edit-round-line.svg";
+import deleteIconWhite from "./recycle-bin-white.png";
+import editIconWhite from "./edit-white.png";
 
 const displayController = (() => {
   // cacheDOM
@@ -78,9 +80,9 @@ const displayController = (() => {
   }
 
   function clearToDoList() {
-    // firstElementChild === tbody
-    while (toDoList.firstElementChild.childNodes.length > 1) {
-      toDoList.firstElementChild.lastChild.remove();
+    // children[2] === tbody
+    while (toDoList.children[2].childNodes.length > 1) {
+      toDoList.children[2].lastChild.remove();
     }
   }
 
@@ -181,8 +183,8 @@ const displayController = (() => {
       newRow.appendChild(editCell);
       newRow.appendChild(deleteCell);
 
-      // firstElementChild === tbody
-      toDoList.firstElementChild.appendChild(newRow);
+      // children[2] === tbody
+      toDoList.children[2].appendChild(newRow);
     }
   }
 
@@ -202,7 +204,7 @@ const displayController = (() => {
         renderToDoList(CURRENT_PROJECT);
       });
 
-      const editPRoj = createIconBtn("edit", editIcon, i);
+      const editPRoj = createIconBtn("edit", editIconWhite, i);
       const EDIT_PROJECT_CLICKED = "edit-project-clicked";
       editPRoj.addEventListener("click", (e) => {
         PubSub.publish(
@@ -212,7 +214,7 @@ const displayController = (() => {
         setVisible(projectForm);
       });
 
-      const deletePRoj = createIconBtn("delete", deleteIcon, i);
+      const deletePRoj = createIconBtn("delete", deleteIconWhite, i);
       const DELETE_PROJECT_CLICKED = "delete-project-clicked";
       deletePRoj.addEventListener("click", (e) => {
         PubSub.publish(
