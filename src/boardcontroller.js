@@ -24,9 +24,9 @@ const boardController = (() => {
     board.splice(index, 1);
   }
 
-  function createToDo(name, description, dueDate, priority, project) {
+  function createToDo(name, description, dueDate, priority, checked, project) {
     findProject(project).addToDo(
-      new ToDo(name, description, dueDate, priority)
+      new ToDo(name, description, dueDate, priority, checked)
     );
   }
 

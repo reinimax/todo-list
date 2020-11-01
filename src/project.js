@@ -29,6 +29,10 @@ export default class Project {
     this.toDoList.push(item);
   }
 
+  findToDo(index) {
+    return this.toDoList[index];
+  }
+
   findToDoIndex(title) {
     return this.toDoList.findIndex((item) => item.title === title);
   }

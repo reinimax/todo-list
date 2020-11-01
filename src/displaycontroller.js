@@ -92,7 +92,7 @@ const displayController = (() => {
     for (let i = 1; i <= 4; i += 1) {
       rowToChange.children[i].toggleAttribute("data-checked");
     }
-    //toggle checkmark on button
+    // toggle checkmark on button
     rowToChange.firstElementChild.firstElementChild.firstElementChild.toggleAttribute(
       "data-display"
     );
@@ -154,8 +154,13 @@ const displayController = (() => {
       checkIcon.setAttribute("src", checkMarkIcon);
       checkIcon.setAttribute("height", "10px");
       checkbox.appendChild(checkIcon);
+      const CHECKBOX_CLICKED = "checkbox-clicked";
       checkbox.addEventListener("click", (e) => {
         changeToDoStatus(e.currentTarget.getAttribute("data-index"));
+        PubSub.publish(
+          CHECKBOX_CLICKED,
+          e.currentTarget.getAttribute("data-index")
+        );
       });
       const checkboxCell = document.createElement("td");
       checkboxCell.appendChild(checkbox);
@@ -222,6 +227,9 @@ const displayController = (() => {
 
       // children[2] === tbody
       toDoList.children[2].appendChild(newRow);
+
+      // mark checked if checked=true
+      if (projectToRender.toDoList[i].checked) changeToDoStatus(i);
     }
   }
 

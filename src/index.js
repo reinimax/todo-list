@@ -73,8 +73,15 @@ import displayController from "./displaycontroller";
     displayController.renderNavBar(boardController.getBoard());
   }
 
-  function createToDo(name, description, dueDate, priority, project) {
-    boardController.createToDo(name, description, dueDate, priority, project);
+  function createToDo(name, description, dueDate, priority, checked, project) {
+    boardController.createToDo(
+      name,
+      description,
+      dueDate,
+      priority,
+      checked,
+      project
+    );
     changeCurrentProject(boardController.findProject(project));
     displayController.renderToDoList(currentProject);
   }
@@ -105,16 +112,24 @@ import displayController from "./displaycontroller";
     // if the user changed the project
     if (projectToAddTo.value !== currentProject.getName()) {
       // delete the todo from the old project
-      deleteToDo(currentProject.findToDoIndex(toDoToEdit));
+      deleteToDo(currentProject.findToDoIndex(toDoToEdit.title));
       // save the todo in the new project
       createToDo(
         toDoToEdit.title,
         toDoToEdit.description,
         toDoToEdit.dueDate,
         toDoToEdit.priority,
+        toDoToEdit.checked,
         projectToAddTo.value
       );
     }
+
+    displayController.renderToDoList(currentProject);
+  }
+
+  function updateChecked(index) {
+    currentProject.findToDo(index).checked = !currentProject.findToDo(index)
+      .checked;
   }
 
   // Subscriptions
@@ -146,6 +161,11 @@ import displayController from "./displaycontroller";
     isNewOrEdit = tag;
   });
 
+  const CHECKBOX_CLICKED = "checkbox-clicked";
+  PubSub.subscribe(CHECKBOX_CLICKED, (_tag, index) => {
+    updateChecked(index);
+  });
+
   // add listeners
   saveProjectBtn.addEventListener("click", () => {
     if (isNewOrEdit === "new-project-clicked") {
@@ -161,6 +181,7 @@ import displayController from "./displaycontroller";
         toDoDescription.value,
         toDoDate.value,
         toDoPriority.value,
+        false,
         projectToAddTo.value
       );
     } else if (isNewOrEdit === "edit-todo-clicked") {
@@ -185,6 +206,7 @@ import displayController from "./displaycontroller";
     "This is a test",
     "2020-10-31",
     "3",
+    false,
     "default"
   );
 
