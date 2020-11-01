@@ -51,6 +51,16 @@ const displayController = (() => {
     const btnToActivate = btnArray[index];
     btnArray.forEach((btn) => btn.classList.remove("active"));
     btnToActivate.classList.add("active");
+
+    // activate also the edit- and delete-buttons
+    const iconBtnList = navBarLinks.getElementsByClassName("icon-btn");
+    const iconBtnArray = [...iconBtnList];
+    iconBtnArray.forEach((btn) => btn.classList.remove("active"));
+
+    const iconBtnToActivate = navBarLinks.querySelectorAll(
+      `[data-index="${index}"]`
+    );
+    iconBtnToActivate.forEach((iconBtn) => iconBtn.classList.add("active"));
   }
 
   function setVisible(popupBox) {

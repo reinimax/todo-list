@@ -37,8 +37,11 @@ button,
 }
 
 .active {
-  border-color: rgb(243, 223, 230);
-  background-image: linear-gradient(rgb(108, 62, 161), rgb(70, 56, 77));
+  border-color: rgb(243, 223, 230) !important;
+  background-image: linear-gradient(
+    rgb(108, 62, 161),
+    rgb(70, 56, 77)
+  ) !important;
 }
 
 /* Layout */
