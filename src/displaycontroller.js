@@ -125,6 +125,8 @@ const displayController = (() => {
 
       const checkbox = document.createElement("input");
       checkbox.setAttribute("type", "checkbox");
+      const checkboxCell = document.createElement("td");
+      checkboxCell.appendChild(checkbox);
 
       const name = document.createElement("td");
       name.textContent = projectToRender.toDoList[i].title;
@@ -161,7 +163,7 @@ const displayController = (() => {
       });
       deleteCell.appendChild(deleteBtn);
 
-      newRow.appendChild(checkbox);
+      newRow.appendChild(checkboxCell);
       newRow.appendChild(name);
       newRow.appendChild(descr);
       newRow.appendChild(date);
