@@ -49,6 +49,14 @@ button,
   ) !important;
 }
 
+td[data-checked] {
+  text-decoration: line-through;
+}
+
+.checkbox img[data-display] {
+  display: inline-block;
+}
+
 /* Layout */
 #flex-container {
   display: flex;
@@ -121,6 +129,25 @@ td {
 tr td:nth-child(5) {
   /* align Priority-cell */
   text-align: center;
+}
+
+tr td {
+  font-size: 1.2em;
+  background: rgb(228, 228, 228);
+}
+
+.checkbox {
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background: transparent;
+  padding: 0;
+  vertical-align: middle;
+}
+
+.checkbox img {
+  margin: 0 0 5px 2px;
+  display: none;
 }
 
 /* Popup Forms */

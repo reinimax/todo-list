@@ -4,6 +4,7 @@ import deleteIcon from "./recycle-bin-line.svg";
 import editIcon from "./edit-round-line.svg";
 import deleteIconWhite from "./recycle-bin-white.png";
 import editIconWhite from "./edit-white.png";
+import checkMarkIcon from "./check-mark-line.svg";
 
 const displayController = (() => {
   // cacheDOM
@@ -86,6 +87,17 @@ const displayController = (() => {
     }
   }
 
+  function changeToDoStatus(targetIndex) {
+    const rowToChange = toDoList.children[2].children[targetIndex];
+    for (let i = 1; i <= 4; i += 1) {
+      rowToChange.children[i].toggleAttribute("data-checked");
+    }
+    //toggle checkmark on button
+    rowToChange.firstElementChild.firstElementChild.firstElementChild.toggleAttribute(
+      "data-display"
+    );
+  }
+
   function createIconBtn(alt, source, dataIndex) {
     const btn = document.createElement("button");
     btn.setAttribute("data-index", `${dataIndex}`);
@@ -135,8 +147,16 @@ const displayController = (() => {
     for (let i = 0; i < projectToRender.toDoList.length; i += 1) {
       const newRow = document.createElement("tr");
 
-      const checkbox = document.createElement("input");
-      checkbox.setAttribute("type", "checkbox");
+      const checkbox = document.createElement("button");
+      checkbox.setAttribute("class", "checkbox");
+      checkbox.setAttribute("data-index", `${i}`);
+      const checkIcon = document.createElement("img");
+      checkIcon.setAttribute("src", checkMarkIcon);
+      checkIcon.setAttribute("height", "10px");
+      checkbox.appendChild(checkIcon);
+      checkbox.addEventListener("click", (e) => {
+        changeToDoStatus(e.currentTarget.getAttribute("data-index"));
+      });
       const checkboxCell = document.createElement("td");
       checkboxCell.appendChild(checkbox);
 
