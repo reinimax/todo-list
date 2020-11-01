@@ -170,7 +170,24 @@ const displayController = (() => {
       date.textContent = projectToRender.toDoList[i].dueDate;
 
       const priority = document.createElement("td");
-      priority.textContent = projectToRender.toDoList[i].priority;
+      let translatePriority;
+      switch (projectToRender.toDoList[i].priority) {
+        case "5":
+          translatePriority = "Highest";
+          break;
+        case "4":
+          translatePriority = "High";
+          break;
+        case "2":
+          translatePriority = "Low";
+          break;
+        case "1":
+          translatePriority = "Lowest";
+          break;
+        default:
+          translatePriority = "Medium";
+      }
+      priority.textContent = translatePriority;
 
       const editCell = document.createElement("td");
       const editBtn = createIconBtn("edit", editIcon, i);
