@@ -24,7 +24,55 @@ import displayController from "./displaycontroller";
   let currentProject;
   let isNewOrEdit;
 
+  let storageAvailable = true;
+  let storage;
+
+  // Init Localstorage
+  try {
+    storage = window.localStorage;
+    storage.setItem("test", "Can retrieve data from local storage");
+    storage.getItem("test");
+    storage.removeItem("test");
+    console.log("Local storage available");
+  } catch {
+    console.log("Local storage not availabe");
+    storageAvailable = false;
+  }
+
   // functions
+  function clearStorage() {
+    if (storageAvailable) storage.clear();
+  }
+
+  function saveBoard(board) {
+    clearStorage();
+    for (let i = 0; i < board.length; i += 1) {
+      const projectID = board[i].name;
+      const projectContent = board[i].toDoList;
+      const projectActive = board[i].active;
+      let projectItems = "";
+
+      for (let j = 0; j < projectContent.length; j += 1) {
+        const toDo = Object.values(projectContent[j]).join("*|*");
+        projectItems += toDo;
+        projectItems += "*|*";
+      }
+      storage.setItem(
+        `project${i}`,
+        `${projectID}*|*${projectActive}*|*${projectItems}`
+      );
+    }
+  }
+
+  function loadBoard() {
+    if (storageAvailable) {
+      for (let i = 0; i < storage.length; i += 1) {
+        const projectArray = storage.getItem(`project${i}`).split("*|*");
+        boardController.restoreProject(projectArray);
+      }
+    }
+  }
+
   function changeCurrentProject(project) {
     if (currentProject !== undefined) currentProject.deactivate();
     currentProject = project;
@@ -32,12 +80,14 @@ import displayController from "./displaycontroller";
     displayController.setActive(
       boardController.findIndexOfProject(currentProject.getName())
     );
+    saveBoard(boardController.getBoard());
   }
 
   function createProject(name) {
     boardController.createProject(name);
     displayController.enable(newToDoBtn);
     displayController.renderNavBar(boardController.getBoard());
+    saveBoard(boardController.getBoard());
   }
 
   let projectToEdit;
@@ -50,6 +100,7 @@ import displayController from "./displaycontroller";
   function editProject() {
     projectToEdit.setName(projectName.value);
     displayController.renderNavBar(boardController.getBoard());
+    saveBoard(boardController.getBoard());
   }
 
   function deleteProject(index) {
@@ -71,6 +122,7 @@ import displayController from "./displaycontroller";
     }
 
     displayController.renderNavBar(boardController.getBoard());
+    saveBoard(boardController.getBoard());
   }
 
   function createToDo(name, description, dueDate, priority, checked, project) {
@@ -84,11 +136,13 @@ import displayController from "./displaycontroller";
     );
     changeCurrentProject(boardController.findProject(project));
     displayController.renderToDoList(currentProject);
+    saveBoard(boardController.getBoard());
   }
 
   function deleteToDo(target) {
     currentProject.deleteToDo(target);
     displayController.renderToDoList(currentProject);
+    saveBoard(boardController.getBoard());
   }
 
   let toDoToEdit;
@@ -125,11 +179,13 @@ import displayController from "./displaycontroller";
     }
 
     displayController.renderToDoList(currentProject);
+    saveBoard(boardController.getBoard());
   }
 
   function updateChecked(index) {
     currentProject.findToDo(index).checked = !currentProject.findToDo(index)
       .checked;
+    saveBoard(boardController.getBoard());
   }
 
   // Subscriptions
@@ -197,18 +253,15 @@ import displayController from "./displaycontroller";
   });
 
   // init
-  boardController.createProject("default");
+  if (storageAvailable && storage.length > 0) {
+    loadBoard();
+  } else {
+    createProject("default");
+    changeCurrentProject(boardController.findProject("default"));
+    createToDo("Test", "This is a test", "2020-10-31", "3", false, "default");
+  }
+
   displayController.renderNavBar(boardController.getBoard());
-  changeCurrentProject(boardController.findProject("default"));
-
-  boardController.createToDo(
-    "Test",
-    "This is a test",
-    "2020-10-31",
-    "3",
-    false,
-    "default"
-  );
-
+  changeCurrentProject(boardController.findActiveProject());
   displayController.renderToDoList(currentProject);
 })();
