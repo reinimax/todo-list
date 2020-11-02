@@ -8,6 +8,8 @@ import displayController from "./displaycontroller";
 
 (function coordinator() {
   // cacheDom
+  const clearStorageBtn = document.querySelector("#clearStorage");
+  const storageInfo = document.querySelector("#info");
   const saveProjectBtn = document.querySelector("#save-project");
   const saveToDoBtn = document.querySelector("#save-todo");
   const newProjectBtn = document.querySelector("#new-project");
@@ -33,9 +35,11 @@ import displayController from "./displaycontroller";
     storage.setItem("test", "Can retrieve data from local storage");
     storage.getItem("test");
     storage.removeItem("test");
-    console.log("Local storage available");
+    storageInfo.textContent =
+      "Your Projects and To-Do's will be saved locally.";
   } catch {
-    console.log("Local storage not availabe");
+    storageInfo.textContent =
+      "Local storage diabled. Your Projects and To-Do's will not be saved locally.";
     storageAvailable = false;
   }
 
@@ -223,6 +227,8 @@ import displayController from "./displaycontroller";
   });
 
   // add listeners
+  clearStorageBtn.addEventListener("click", clearStorage);
+
   saveProjectBtn.addEventListener("click", () => {
     if (isNewOrEdit === "new-project-clicked") {
       createProject(projectName.value);
