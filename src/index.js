@@ -264,7 +264,14 @@ import displayController from "./displaycontroller";
   } else {
     createProject("default");
     changeCurrentProject(boardController.findProject("default"));
-    createToDo("Test", "This is a test", "2020-10-31", "3", false, "default");
+    createToDo(
+      "Get started",
+      "Create Projects, add To-Do's, check them off, edit and delete them!",
+      "2020-11-02",
+      "3",
+      false,
+      "default"
+    );
   }
 
   displayController.renderNavBar(boardController.getBoard());
