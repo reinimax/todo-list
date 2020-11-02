@@ -1,6 +1,9 @@
 This is my take on a To-Do list app that lets the user create, edit and delete projects and associated To-Do items.
 
-Work in progress.
+Update:
+Finished for now. It basically works and fulfills the requirements. Much room to improve, obviously.
+Versus the end, I found the project quite frustrating. I spent hours to find and fix bugs and unintended consequences that were often the result of poor planning, poor project design and lack of standards. A little more thought upfront could have saved me hours of work and a good amount of mental peace.
+Well, this was my first more complex project. In the future I will try to plan better and think stuff through more thoroughly before starting to code.
 
 Update:
 Now it's time to make things smoother and more comfortable.
