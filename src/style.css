@@ -88,6 +88,7 @@ td[data-checked] {
   flex-grow: 1;
 }
 
+.hover-effect:hover,
 .navbar-btn:hover,
 .inner-navbar .icon-btn:hover {
   box-shadow: 2px 2px 10px 2px rgb(41, 42, 54) inset;
@@ -174,4 +175,21 @@ tr td {
   height: 400px;
   border: 1px solid black;
   padding-left: 30px;
+}
+
+/* Local storage */
+#localstorage-handler {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
+#info {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+#clearStorage {
+  display: inline-block;
+  vertical-align: text-top;
 }
