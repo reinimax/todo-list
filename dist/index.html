@@ -44,46 +44,46 @@
     </div>
 
     <div id="new-project-form" class="popup-box">
-      <div>
-        <label for="project-name">Name of the project</label>
-        <input id="project-name" />
-      </div>
-      <div>
+      <label for="project-name">Name of the project</label>
+      <input id="project-name" required />
+
+      <div class="btn-group">
         <button id="save-project" class="hover-effect">Save</button>
         <button class="cancel hover-effect">Cancel</button>
       </div>
     </div>
 
     <div id="new-todo-form" class="popup-box">
-      <div>
-        <label for="todo-name">Name of the To-Do</label>
-        <input id="todo-name" />
-      </div>
-      <div>
-        <label for="todo-descr">Description</label>
-        <textarea id="todo-descr"></textarea>
-      </div>
-      <div>
-        <label for="todo-date">Due date</label>
-        <input type="date" id="todo-date" />
-      </div>
-      <div>
-        <label for="todo-priority">Priority</label>
-        <select id="todo-priority">
-          <option value="5">Highest</option>
-          <option value="4">High</option>
-          <option value="3" selected>Medium</option>
-          <option value="2">Low</option>
-          <option value="1">Lowest</option>
-        </select>
-      </div>
-      <div>
+      <label for="todo-name">Name of the To-Do</label>
+      <input id="todo-name" required />
+
+      <label for="todo-descr">Description</label>
+      <textarea id="todo-descr"></textarea>
+
+      <fieldset id="date-priority">
+        <div>
+          <label for="todo-date">Due date</label>
+          <input type="date" id="todo-date" required />
+        </div>
+        <div>
+          <label for="todo-priority">Priority</label>
+          <select id="todo-priority">
+            <option value="5">Highest</option>
+            <option value="4">High</option>
+            <option value="3" selected>Medium</option>
+            <option value="2">Low</option>
+            <option value="1">Lowest</option>
+          </select>
+        </div>
+      </fieldset>
+
+      <div id="project-to-add-wrapper">
         <label for="project-to-add-to">Add your To-Do to project</label>
         <select id="project-to-add-to">
           <option value="default">default</option>
         </select>
       </div>
-      <div>
+      <div class="btn-group">
         <button id="save-todo" class="hover-effect">Save</button>
         <button class="cancel hover-effect">Cancel</button>
       </div>
