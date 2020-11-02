@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>My To-Do List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
 
   <body>
@@ -48,8 +49,8 @@
         <input id="project-name" />
       </div>
       <div>
-        <button id="save-project">Save</button>
-        <button class="cancel">Cancel</button>
+        <button id="save-project" class="hover-effect">Save</button>
+        <button class="cancel hover-effect">Cancel</button>
       </div>
     </div>
 
@@ -83,9 +84,14 @@
         </select>
       </div>
       <div>
-        <button id="save-todo">Save</button>
-        <button class="cancel">Cancel</button>
+        <button id="save-todo" class="hover-effect">Save</button>
+        <button class="cancel hover-effect">Cancel</button>
       </div>
+    </div>
+
+    <div id="localstorage-handler">
+      <p id="info">Your Projects and To-Do's will be saved locally.</p>
+      <button id="clearStorage" class="hover-effect">Clear all</button>
     </div>
 
     <script src="main.js"></script>
