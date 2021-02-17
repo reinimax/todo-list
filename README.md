@@ -16,9 +16,9 @@ A todo list app for the JavaScript curriculum at [The Odin Project](https://www.
 - This application is frontend only. The data is saved via localStorage as arrays of objects.
 - Two classes serve as the blueprint for projects and todo's.
 - There a three modules (so, here we have a classic Model-View-Controller pattern. However, back then when I started this project, this was not really so clear to me):
-  -- boardcontroller.js manipulates the data, i.e. creating, changing or deleting project- or todo-objects.
-  -- displaycontroller.js manipulates the DOM.
-  -- index.js coordinates the other two modules.
+  - boardcontroller.js manipulates the data, i.e. creating, changing or deleting project- or todo-objects.
+  - displaycontroller.js manipulates the DOM.
+  - index.js coordinates the other two modules.
 
 ## Reflection
 
