@@ -27,8 +27,8 @@ A todo list app for the JavaScript curriculum at [The Odin Project](https://www.
 
 ## Built with
 
-[webpack](https://webpack.js.org/)
-[PubSubJS](https://github.com/mroderick/PubSubJS#readme)
+- [webpack](https://webpack.js.org/)
+- [PubSubJS](https://github.com/mroderick/PubSubJS#readme)
 
 ## Demo
 
